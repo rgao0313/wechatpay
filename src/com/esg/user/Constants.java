@@ -3,6 +3,7 @@ package com.esg.user;
 public class Constants {
 	// APP_ID 替换为你的应用从官方网站申请到的合法appId
     public static final String APP_ID = "wxbf2d3471574cbb22";
+    public static final String url = "ieasyfm.com/site/test";
     public static final String partnerId = "";
     public static final String nonceStr = "";
     public static final String timeStamp = "";

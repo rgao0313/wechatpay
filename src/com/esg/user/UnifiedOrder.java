@@ -1,6 +1,6 @@
 package com.esg.user;
 
-import android.annotation.SuppressLint;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,6 +43,7 @@ public class UnifiedOrder {
     public static String unifiedOrder(){
 //        Map map = WebUtils.getParameterMap();//获取前台数据
         String appid = Constants.APP_ID;//appid
+        System.out.print(appid);//77TEST
         String mch_id = Constants.MCH_ID;//微信支付商户号
         String nonce_str =getRandomStringByLength(8);//随机码
 //        String body = map.get("bodyName").toString();//商品描述
@@ -56,7 +57,7 @@ public class UnifiedOrder {
 //        String time_start =getCurrTime();//交易起始时间(订单生成时间非必须)
         String trade_type = "APP";//公众号支付
 //        String notify_url = "http://"+"域名"+"/"+"项目名"+"回调地址.do";//回调函数
-        String notify_url = "http://ieasyfm.com/site/index";
+        String notify_url = Constants.url;
         SortedMap<String, String> params = new TreeMap<String, String>();
         params.put("appid", appid);
         params.put("mch_id", mch_id);
@@ -71,8 +72,10 @@ public class UnifiedOrder {
         params.put("notify_url", notify_url); 
         String sign = Constants.APPSECRET;//签名(该签名本应使用微信商户平台的API证书中的密匙key,但此处使用的是微信公众号的密匙APP_SECRET)
         sign = getSign(params);
+        System.out.print(sign);//77TEST
         //参数xml化
         String xmlParams = parseString2Xml(params,sign);
+        
         //判断返回码
         byte[] jsonStr = null;
         try {

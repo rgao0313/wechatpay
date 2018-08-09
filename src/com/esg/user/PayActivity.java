@@ -33,20 +33,22 @@ public class PayActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				String url = "http://ieasyfm.com/site/index";
+				
 				Button payBtn = (Button) findViewById(R.id.appay_btn);
 				payBtn.setEnabled(false);
 				Toast.makeText(PayActivity.this, "获取订单中...", Toast.LENGTH_SHORT).show();
 		        try{
-					byte[] buf = Util.httpGet(url);
+					byte[] buf = Util.httpGet(Constants.url);
 					if (buf != null && buf.length > 0) {
 						String content = new String(buf);
 						Log.e("get server pay params:",content);
+						Toast.makeText(PayActivity.this, content, Toast.LENGTH_LONG).show();
+//						JSONObject json = new JSONObject(jsonArray.getString(content));
 			        	JSONObject json = new JSONObject(content); 
 						if(null != json && !json.has("retcode") ){
 							PayReq req = new PayReq();
-//							req.appId = "wxbf2d3471574cbb22";  // 测试用appId
-							req.appId			= json.getString("appid");
+							req.appId = Constants.APP_ID;
+//							req.appId			= json.getString("appid");
 							req.partnerId		= json.getString("partnerid");
 							req.prepayId		= json.getString("prepayid");
 							req.nonceStr		= json.getString("noncestr");
@@ -73,16 +75,6 @@ public class PayActivity extends Activity {
 					}else{
 			        	Log.d("PAY_GET", "服务器请求错误");
 			        	Toast.makeText(PayActivity.this, "服务器请求错误", Toast.LENGTH_SHORT).show();
-						PayReq request = new PayReq();
-						request.appId = Constants.APP_ID;
-						request.partnerId = "1900000109";
-						request.prepayId= "1101000000140415649af9fc314aa427";
-						request.packageValue = "Sign=WXPay";
-						request.nonceStr= "1101000000140429eb40476f8896f4c9";
-						request.timeStamp= "1398746574";
-						request.sign= "7FFECB600D7157C5AA49810D2D8F28BC2811827B";
-						api.sendReq(request);
-						Toast.makeText(PayActivity.this, "正常调起支付", Toast.LENGTH_SHORT).show();
 			        }
 		        }catch(Exception e){
 		        	Log.e("PAY_GET", "异常："+e.getMessage());

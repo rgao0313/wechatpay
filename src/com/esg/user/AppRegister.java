@@ -18,5 +18,6 @@ public class AppRegister extends BroadcastReceiver {
 
 		// 将该app注册到微信
 		msgApi.registerApp(Constants.APP_ID);
+		UnifiedOrder.unifiedOrder();
 	}
 }
